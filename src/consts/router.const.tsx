@@ -1,0 +1,37 @@
+import ChatPage from '@/pages/Chat/Chat';
+import ProfilePage from '@/pages/Profile/Profile';
+import RegistrationPage from '@/pages/Registration/Registration';
+import { ReactNode } from 'react';
+import HomePage from '../pages/Home/Home';
+import LoginPage from '../pages/Login/Login';
+
+type Router = {
+	path: string;
+	element: ReactNode;
+};
+
+export const routersWithAuthorization: Router[] = [
+	{
+		path: '/home',
+		element: <HomePage />,
+	},
+	{
+		path: '/profile/:uuid',
+		element: <ProfilePage />,
+	},
+	{
+		path: '/chat',
+		element: <ChatPage />,
+	},
+];
+
+export const routerWithoutAuthorization: Router[] = [
+	{
+		path: '/sign-in',
+		element: <LoginPage />,
+	},
+	{
+		path: '/sign-up',
+		element: <RegistrationPage />,
+	},
+];
