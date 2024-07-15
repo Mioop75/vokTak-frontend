@@ -19,21 +19,27 @@ export default function ProfilePage() {
 
 	return (
 		<div className="grid grid-cols-4 gap-4">
-			<Info
-				avatar={user?.avatar}
-				email={user?.email}
-				firstname={user?.firstname}
-				lastname={user?.lastname}
-				info={user?.info}
-			/>
-			<div>
-				<Friends />
-				<Photos />
-			</div>
-			<div className="col-start-2 col-end-7">
-				<CreatePost />
-				<Posts posts={user?.posts as IPost[]} />
-			</div>
+			{user && (
+				<>
+					<Info
+						avatar={user.avatar}
+						email={user.email}
+						firstname={user.firstname}
+						lastname={user.lastname}
+						info={user.info}
+						friendsCount={user.friends.length}
+						photosCount={user.photos.length}
+					/>
+					<div>
+						<Friends friends={user.friends} />
+						<Photos photos={user.photos} />
+					</div>
+					<div className="col-start-2 col-end-7">
+						<CreatePost />
+						<Posts posts={user?.posts as IPost[]} />
+					</div>
+				</>
+			)}
 		</div>
 	);
 }

@@ -6,4 +6,6 @@ export interface IInfoComponent {
 	firstname: string;
 	lastname: string;
 	info: IUserInfo;
+	friendsCount: number;
+	photosCount: number;
 }
