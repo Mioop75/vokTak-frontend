@@ -26,7 +26,7 @@ export interface IUser {
 	notification: INotification[];
 }
 
-interface IFriend {
+export interface IFriend {
 	id: number;
 	user: IUser;
 	confirmed: boolean;

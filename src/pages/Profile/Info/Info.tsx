@@ -21,7 +21,15 @@ import { BsThreeDots } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { IInfoComponent } from './Info.interface';
 
-const Info = ({ avatar, email, firstname, lastname, info }: IInfoComponent) => {
+const Info = ({
+	avatar,
+	email,
+	firstname,
+	lastname,
+	friendsCount,
+	photosCount,
+	info,
+}: IInfoComponent) => {
 	return (
 		<Card className="mb-5 p-3 col-start-1 col-end-7">
 			<CardHeader className="flex-row gap-4 items-start justify-between">
@@ -85,12 +93,12 @@ const Info = ({ avatar, email, firstname, lastname, info }: IInfoComponent) => {
 			<Separator className="mb-5" />
 			<CardFooter className="gap-5">
 				<div>
-					<div className="text-xl text-blue-600">2,630</div>
+					<div className="text-xl text-blue-600">{photosCount}</div>
 					<p className="text-gray-500">Photos</p>
 				</div>
 				<div>
-					<div className="text-xl text-blue-600">2,630</div>
-					<p className="text-gray-500">Photos</p>
+					<div className="text-xl text-blue-600">{friendsCount}</div>
+					<p className="text-gray-500">Friends</p>
 				</div>
 			</CardFooter>
 		</Card>
