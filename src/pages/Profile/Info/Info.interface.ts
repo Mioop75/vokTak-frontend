@@ -1,6 +1,7 @@
 import { IAvatar, IUserInfo } from '@/types/User.interface';
 
 export interface IInfoComponent {
+	uuid: string;
 	avatar: IAvatar;
 	email: string;
 	firstname: string;

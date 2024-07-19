@@ -1,7 +1,7 @@
 import Search from '@/components/shared/Search/Search';
 import Logo from './Logo';
-import Notification from './Notification';
-import Profile from './Profile';
+import Notification from './Notification/Notification';
+import Profile from './Profile/Profile';
 
 const Header = () => {
 	return (

@@ -16,12 +16,13 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Separator } from '@/components/ui/separator';
 import { formatName } from '@/utils/formatName';
-import { BiMessage } from 'react-icons/bi';
 import { BsThreeDots } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { IInfoComponent } from './Info.interface';
+import WriteMessage from './WriteMessage/WriteMessage';
 
 const Info = ({
+	uuid,
 	avatar,
 	email,
 	firstname,
@@ -42,9 +43,7 @@ const Info = ({
 					<Button className="bg-green-600 hover:bg-green-900">
 						Add friend
 					</Button>
-					<Button variant="secondary" title="Write a message">
-						<BiMessage className="w-5 h-5" />
-					</Button>
+					<WriteMessage uuid={uuid} firstname={firstname} lastname={lastname} />
 					<DropdownMenu>
 						<DropdownMenuTrigger className="outline-none bg-secondary p-2 transition-colors rounded-sm w-10 h-10 hover:bg-slate-300">
 							<BsThreeDots className="inline w-5 h-5" />

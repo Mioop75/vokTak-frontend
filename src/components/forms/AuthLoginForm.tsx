@@ -12,7 +12,7 @@ import { useUserStore } from '@/store/user.store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { Input } from '../ui/input';
 
@@ -27,6 +27,7 @@ const AuthLoginForm = () => {
 	});
 	const [isNotEqualPassword, setIsNotEqualPassword] = useState<boolean>(false);
 	const { signIn, error } = useUserStore();
+	const navigate = useNavigate();
 
 	async function onSubmit(values: z.infer<typeof loginFormSchema>) {
 		const { password, confirmedPassword } = form.getValues();
@@ -36,6 +37,7 @@ const AuthLoginForm = () => {
 			return null;
 		}
 
+		navigate('/home');
 		setIsNotEqualPassword(false);
 		signIn(values);
 	}

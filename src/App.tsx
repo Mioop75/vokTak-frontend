@@ -1,4 +1,4 @@
-import { ThemeProvider } from './components/shared/ThemeProvider';
+import { ThemeProvider } from './providers/ThemeProvider';
 import Router from './Router';
 
 function App() {

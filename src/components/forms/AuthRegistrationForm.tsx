@@ -12,7 +12,7 @@ import { useUserStore } from '@/store/user.store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { Input } from '../ui/input';
 
@@ -30,6 +30,7 @@ const AuthRegistrationForm = () => {
 	});
 	const [isNotEqualPassword, setIsNotEqualPassword] = useState<boolean>(false);
 	const { signUp, error } = useUserStore();
+	const navigate = useNavigate();
 
 	// 2. Define a submit handler.
 	function onSubmit(values: z.infer<typeof registrationSchemaForm>) {
@@ -40,6 +41,7 @@ const AuthRegistrationForm = () => {
 			return null;
 		}
 
+		navigate('/home');
 		setIsNotEqualPassword(false);
 		signUp(values);
 	}
