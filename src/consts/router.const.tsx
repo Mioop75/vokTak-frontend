@@ -1,6 +1,7 @@
 import ChatPage from '@/pages/Chat/Chat';
 import ProfilePage from '@/pages/Profile/Profile';
 import RegistrationPage from '@/pages/Registration/Registration';
+import SettingsPage from '@/pages/Settings/Settings';
 import { ReactNode } from 'react';
 import HomePage from '../pages/Home/Home';
 import LoginPage from '../pages/Login/Login';
@@ -18,6 +19,10 @@ export const routersWithAuthorization: Router[] = [
 	{
 		path: '/profile/:uuid',
 		element: <ProfilePage />,
+	},
+	{
+		path: '/settings',
+		element: <SettingsPage />,
 	},
 	{
 		path: '/chat',

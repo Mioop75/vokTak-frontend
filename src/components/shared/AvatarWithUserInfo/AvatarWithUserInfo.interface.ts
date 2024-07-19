@@ -4,4 +4,5 @@ export interface IAVatarWithUserInfo {
 	sizeTitle?: 'base' | 'md' | 'lg' | 'sm';
 	direction?: 'column' | 'row';
 	extraInfo?: string;
+	className?: string;
 }

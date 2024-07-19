@@ -22,6 +22,7 @@ export default function ProfilePage() {
 			{user && (
 				<>
 					<Info
+						uuid={user.uuid}
 						avatar={user.avatar}
 						email={user.email}
 						firstname={user.firstname}

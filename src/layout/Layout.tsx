@@ -16,15 +16,15 @@ const Layout = () => {
 	}
 
 	return (
-		<div>
+		<>
 			<Header />
-			<div className="container flex gap-5">
+			<div className="flex gap-5 container">
 				<Sidebar />
 				<main className="flex-auto">
 					<Outlet />
 				</main>
 			</div>
-		</div>
+		</>
 	);
 };
 

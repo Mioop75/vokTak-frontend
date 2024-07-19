@@ -1,26 +1,17 @@
-import { Button } from '@/components/ui/button';
 import {
 	Card,
 	CardContent,
 	CardFooter,
 	CardHeader,
 } from '@/components/ui/card';
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
-	DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import postsService from '@/services/posts.service';
 import { IPost } from '@/types/Post.interface';
 import { formatName } from '@/utils/formatName';
 import { timeSince } from '@/utils/timeSince';
-import { BsThreeDots } from 'react-icons/bs';
-import { useMutation, useQueryClient } from 'react-query';
 import AvatarWithUserInfo from '../AvatarWithUserInfo/AvatarWithUserInfo';
+import Actions from './Actions/Actions';
 import Comment from './Comment/Comment';
+import Comments from './Comments/Comments';
+import Images from './Images/Images';
 import Like from './Like/Like';
 import Share from './Share/Share';
 
@@ -32,15 +23,6 @@ const Post = ({
 	created_at,
 	author,
 }: IPost) => {
-	const queryClient = useQueryClient();
-
-	const removePostMutation = useMutation({
-		mutationFn: () => postsService.deletePost(uuid),
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['posts'] });
-		},
-	});
-
 	return (
 		<Card className="max-w-lg">
 			<CardHeader className="flex-row gap-4 items-start justify-between">
@@ -49,28 +31,11 @@ const Post = ({
 					fullName={formatName(author.firstname, author.lastname)}
 					extraInfo={timeSince(created_at)}
 				/>
-				<DropdownMenu>
-					<DropdownMenuTrigger className="outline-none bg-slate-200 p-2 transition-colors rounded-sm w-8 h-8 hover:bg-slate-300">
-						<BsThreeDots />
-					</DropdownMenuTrigger>
-					<DropdownMenuContent>
-						<DropdownMenuLabel>Actions</DropdownMenuLabel>
-						<DropdownMenuSeparator />
-						<DropdownMenuItem>Share</DropdownMenuItem>
-						<DropdownMenuItem>
-							<Button>Update</Button>
-						</DropdownMenuItem>
-						<DropdownMenuItem>
-							<Button onClick={() => removePostMutation.mutate()}>
-								Delete
-							</Button>
-						</DropdownMenuItem>
-						<DropdownMenuItem>Hide</DropdownMenuItem>
-					</DropdownMenuContent>
-				</DropdownMenu>
+				<Actions uuid={uuid} />
 			</CardHeader>
 			<CardContent>
-				<p>{content}</p>
+				<p className="mb-3">{content}</p>
+				<Images />
 			</CardContent>
 			<CardFooter className="justify-between gap-5">
 				<div className="flex gap-5">
@@ -79,6 +44,7 @@ const Post = ({
 				</div>
 				<Share />
 			</CardFooter>
+			<Comments />
 		</Card>
 	);
 };

@@ -8,16 +8,17 @@ const AvatarWithUserInfo = ({
 	direction = 'row',
 	sizeTitle = 'lg',
 	extraInfo,
+	className,
 }: IAVatarWithUserInfo) => {
 	return (
 		<div
-			className={clsx('flex gap-2 items-center', {
+			className={clsx('flex gap-2 items-center', className, {
 				['flex-col']: direction === 'column',
 			})}
 		>
 			<Avatar className="w-11 h-11">
 				<AvatarImage src={avatarSrc} alt={fullName} />
-				<AvatarFallback>{fullName}</AvatarFallback>
+				<AvatarFallback />
 			</Avatar>
 			<div>
 				<div
