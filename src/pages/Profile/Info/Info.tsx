@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Separator } from '@/components/ui/separator';
 import { formatName } from '@/utils/formatName';
+import clsx from 'clsx';
 import { BsThreeDots } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { IInfoComponent } from './Info.interface';
@@ -31,14 +32,27 @@ const Info = ({
 	photosCount,
 	info,
 }: IInfoComponent) => {
+	const status = false;
+
 	return (
 		<Card className="mb-5 p-3 col-start-1 col-end-7">
 			<CardHeader className="flex-row gap-4 items-start justify-between">
-				<AvatarWithUserInfo
-					avatarSrc={avatar?.photo?.image}
-					fullName={formatName(firstname, lastname)}
-					extraInfo={email}
-				/>
+				<div className="relative">
+					<AvatarWithUserInfo
+						avatarSrc={avatar?.photo?.image}
+						fullName={formatName(firstname, lastname)}
+						extraInfo={email}
+					/>
+					<div
+						className={clsx(
+							'w-6 h-6 rounded-full absolute top-[-10px] left-[-10px]',
+							{
+								['bg-green-700']: status,
+								['none']: !status,
+							}
+						)}
+					></div>
+				</div>
 				<div className="flex items-center gap-3">
 					<Button className="bg-green-600 hover:bg-green-900">
 						Add friend

@@ -20,6 +20,7 @@ export const useUserStore = create<UserState>(set => ({
 	signIn: async data => {
 		try {
 			const response = await authService.signIn(data);
+			localStorage.setItem('user_uuid', response?.uuid as string);
 			set({ user: response });
 		} catch (error) {
 			set({ user: null, error } as { error: string });
@@ -28,6 +29,7 @@ export const useUserStore = create<UserState>(set => ({
 	signUp: async data => {
 		try {
 			const response = await authService.signUp(data);
+			localStorage.setItem('user_uuid', response?.uuid as string);
 			set({ user: response });
 		} catch (error) {
 			set({ error: error } as { error: string });
@@ -35,11 +37,13 @@ export const useUserStore = create<UserState>(set => ({
 	},
 	logout: async () => {
 		await authService.logout();
+		localStorage.removeItem('user_uuid');
 		set({ user: null });
 	},
 	getMe: async () => {
 		try {
 			const response = await authService.getMe();
+			localStorage.setItem('user_uuid', response?.uuid as string);
 			set({ user: response });
 		} catch (error) {
 			set({ error: error } as { error: string });

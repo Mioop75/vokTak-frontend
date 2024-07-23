@@ -3,36 +3,43 @@ import chatService from '@/services/chat/chat.service';
 import { useUserStore } from '@/store/user.store';
 import { IMessage } from '@/types/Chat.interface';
 import { formatName } from '@/utils/formatName';
-import { Socket } from '@/utils/socket';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { IChatScreenComponent } from './ChatScreen.interface';
 import Messages from './Messages/Messages';
 import WriteMessage from './WriteMessage/WriteMessage';
 
-const ChatScreen = ({ chatId }: IChatScreenComponent) => {
+const ChatScreen = ({ chatId, socket }: IChatScreenComponent) => {
 	const { data: chat } = useQuery('chat', () => chatService.getChat(chatId));
 	const { user } = useUserStore();
+	const [isConnected, setIsConnected] = useState<boolean>(false);
 
 	const [messages, setMessages] = useState<IMessage[]>([]);
-	const socket = Socket('chat', user.uuid);
 
 	useEffect(() => {
 		const messageListener = (message: IMessage) => {
 			setMessages(prev => [...prev, message]);
 		};
 
-		socket.on('get_messages', messageListener);
-		socket.emit('get_messages', 2);
+		socket.on('create_message', messageListener);
+		socket.on('connect', () => setIsConnected(true));
+		socket.on('disconnect', () => setIsConnected(false));
+
+		socket.emit('get_messages', chatId, (data: IMessage[]) => {
+			setMessages([...data]);
+		});
 
 		return () => {
-			socket.off('chat', messageListener);
+			socket.off('create_message', messageListener);
+			socket.off('get_messages');
+			socket.off('connect');
+			socket.off('disconnect');
 		};
 	}, [socket]);
 
 	return (
 		<div className="flex-1 overflow-hidden">
-			{chat ? (
+			{chat && user ? (
 				<>
 					<div className="border-b-2 p-4">
 						<AvatarWithUserInfo
@@ -41,16 +48,20 @@ const ChatScreen = ({ chatId }: IChatScreenComponent) => {
 								chat.users[chat.users.length - 1].firstname,
 								chat.users[chat.users.length - 1].lastname
 							)}
-							extraInfo="active 2 mins ago"
+							extraInfo={isConnected ? 'Online' : 'Offline'}
 						/>
 					</div>
 					<div className="w-full h-full max-h-[516px] overflow-y-auto overflow-x-hidden flex justify-between flex-col">
-						<Messages />
-						<WriteMessage />
+						<Messages messages={messages} />
+						<WriteMessage
+							socket={socket}
+							chatId={chatId}
+							user_uuid={user.uuid}
+						/>
 					</div>
 				</>
 			) : (
-				<div>No chat</div>
+				<div>Some error</div>
 			)}
 		</div>
 	);
